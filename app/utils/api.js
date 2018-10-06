@@ -5,19 +5,20 @@ var sec = "07f4606a80aa205f1ab1dd100066838f10594a3c";
 var params = `?client_id=${id}&client_secret=${sec}`;
 
 function getProfile(username) {
-    return axios.get('http://api.githu.com/users/' + username + params).then(function (user) {
-        return user.data;
-    });
+    return axios.get('https://api.github.com/users/' + username + params)
+        .then(function (user) {
+            return user.data;
+        });
 }
 
 function getRepos(username) {
-    return axios.get('http://api.githu.com/users/' + username + '/repos' + params + '&per_page=100');
+    return axios.get('https://api.github.com/users/' + username + '/repos' + params + '&per_page=100');
 }
 
 function getStarCount(repos) {
     return repos.data.reduce(function (count, repo) {
-        return count + repo.stargazers_count;
-    }, 0)
+        return count + repo.stargazers_count
+    }, 0);
 }
 
 function calculateScore(profile, repos) {
@@ -33,7 +34,10 @@ function handleError(error) {
 }
 
 function getUserData(player) {
-    return axios.all([getProfile(player), getRepos(player)]).the(function (data) {
+    return axios.all([
+        getProfile(player),
+        getRepos(player)
+    ]).then(function (data) {
         var profile = data[0];
         var repos = data[1];
 
@@ -41,13 +45,13 @@ function getUserData(player) {
             profile: profile,
             score: calculateScore(profile, repos)
         }
-    })
+    });
 }
 
 function sortPlayers(players) {
     return players.sort(function (a, b) {
         return b.score - a.score;
-    })
+    });
 }
 
 module.exports = {
@@ -56,7 +60,6 @@ module.exports = {
             .then(sortPlayers)
             .catch(handleError);
     },
-
     fetchPopularRepos: function (language) {
         var encodedURI = window.encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:' + language + '&sort=stars&order=desc&type=Repositories');
 
@@ -65,4 +68,4 @@ module.exports = {
                 return response.data.items;
             });
     }
-}
+};
