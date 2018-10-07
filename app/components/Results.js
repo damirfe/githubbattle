@@ -60,20 +60,20 @@ class Results extends React.Component {
             )
         }
 
-        // return (
-        //     <div className='row'>
-        //         <Player
-        //             label='Winner'
-        //             score={winner.score}
-        //             profile={winner.profile}
-        //         />
-        //         <Player
-        //             label='Loser'
-        //             score={loser.score}
-        //             profile={loser.profile}
-        //         />
-        //     </div>)
-        return(<div>Hello</div>)
+        return (
+            <div className='row'>
+                <Player
+                    label='Winner'
+                    score={winner.score}
+                    profile={winner.profile}
+                />
+                <Player
+                    label='Loser'
+                    score={loser.score}
+                    profile={loser.profile}
+                />
+            </div>)
+        return (<div>Hello</div>)
     }
 }
 

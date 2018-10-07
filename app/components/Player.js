@@ -1,4 +1,4 @@
-import React from 'react'
+var React = require('react');
 var PropTypes = require('prop-types');
 var Profile = require('./Profile');
 
