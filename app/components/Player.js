@@ -1,8 +1,8 @@
-const React = require("react");
-const PropTypes = require("prop-types");
-const Profile = require("./Profile");
+import React from "react";
+import PropTypes from "prop-types";
+import Profile from "./Profile";
 
-function Player({ label, score, profile }) {
+export default function Player({ label, score, profile }) {
   return (
     <div>
       <h1 className="header">{label}</h1>
@@ -17,5 +17,3 @@ Player.propTypes = {
   score: PropTypes.number.isRequired,
   profile: PropTypes.object.isRequired
 };
-
-module.exports = Player;

@@ -1,26 +1,24 @@
-const React = require("react");
-const queryString = require("query-string");
-const api = require("../utils/api");
-const Link = require("react-router-dom").Link;
-const Loading = require("./Loading");
-const Player = require("./Player");
+import React from "react";
+import queryString from "query-string";
+import { battle } from "../utils/api";
+import { Link } from "react-router-dom";
+import Loading from "./Loading";
+import Player from "./Player";
 
 class Results extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      winner: null,
-      loser: null,
-      error: null,
-      loading: true
-    };
-  }
+  state = {
+    winner: null,
+    loser: null,
+    error: null,
+    loading: true
+  };
+
   componentDidMount() {
     const { playerOneName, playerTwoName } = queryString.parse(
       this.props.location.search
     );
 
-    api.battle([playerOneName, playerTwoName]).then(players => {
+    battle([playerOneName, playerTwoName]).then(players => {
       players === null
         ? this.setState(() => ({
             error:
@@ -58,8 +56,7 @@ class Results extends React.Component {
         <Player label="Loser" score={loser.score} profile={loser.profile} />
       </div>
     );
-    return <div>Hello</div>;
   }
 }
 
-module.exports = Results;
+export default Results;

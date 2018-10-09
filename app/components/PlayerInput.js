@@ -1,28 +1,32 @@
-var React = require("react");
-var PropTypes = require("prop-types");
+import React from "react";
+import PropTypes from "prop-types";
 
 class PlayerInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: ""
-    };
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    onSubmit: PropTypes.func.isRequired
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  static defaultProps = {
+    label: "Username"
+  };
 
-  handleChange(event) {
+  state = {
+    username: ""
+  };
+
+  handleChange = event => {
     // Note in React we cant destructure event's by the time callback function is run this event will be lost
     const value = event.target.value;
     this.setState(() => ({ username: value }));
-  }
+  };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
 
     this.props.onSubmit(this.props.id, this.state.username);
-  }
+  };
   render() {
     const { username } = this.state;
     const { label } = this.props;
@@ -47,14 +51,4 @@ class PlayerInput extends React.Component {
   }
 }
 
-PlayerInput.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
-};
-
-PlayerInput.defaultProps = {
-  label: "Username"
-};
-
-module.exports = PlayerInput;
+export default PlayerInput;
